@@ -1,46 +1,49 @@
 package com.test;
 
-import com.sun.java.swing.plaf.windows.TMSchema;
-
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.Iterator;
 import java.util.Properties;
 
 public class ProUtil {
 
     private Properties pro;
-    private  String filePath;
 
     //构造方法
     public ProUtil(String filePath){
-        this.filePath = filePath;
+        this.pro=readProperties(filePath);
     }
 
     //读取配置文件
-    private Properties readProperties(){
-        Properties prop =new Properties();
-
+    private Properties readProperties(String  filePath){
+        Properties properties =new Properties();
         try {
-            InputStream in = new BufferedInputStream(new FileInputStream(filePath));
-            prop.load(in);
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+            properties.load(bufferedInputStream);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return properties;
     }
 
-    public String  getPto(String key) throws Exception{
+    public String  getPro(String key){
+
+        Iterator<String> it=pro.stringPropertyNames().iterator();
+        while(it.hasNext()){
+            String value=it.next();
+            System.out.println(key+":"+pro.getProperty(key));
+            return pro.getProperty(key);
+        }
+        return  " ";
 
 
 
-        String username = prop.getProperty(key);
-        return username;
     }
 
     public static void main(String[] args) throws  Exception{
-        ProUtil proUtil =new ProUtil();
-        proUtil.getPto("username");
+        ProUtil proUtil =new ProUtil("element.properties");
+        proUtil.getPro("name");
     }
 
 }
