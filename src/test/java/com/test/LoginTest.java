@@ -1,21 +1,25 @@
 package com.test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-public class Login  {
-
+import static org.testng.Assert.*;
+@Listeners(TestngListenerScreenShotTest.class)
+public class LoginTest extends baseDriver{
     public WebDriver driver;
-    public  WebElement element;
+    public WebElement element;
     String filePath = "element.properties";
 
-
-    public void InitDriver(){
+    @Test
+    public void testInitDriver() {
         System.setProperty("webdriver.chrome.driver","chromedriver");
         driver = new ChromeDriver();
         driver.get("https://www.imooc.com/");
@@ -23,10 +27,8 @@ public class Login  {
         driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
     }
 
-
-    public void loginTest(){
-
-
+    @Test(dependsOnMethods ={"testInitDriver"} )
+    public void testLoginTest() {
         String username = "username";
         String password = "password";
         String id_jsbtn = "id_jsbtn";
@@ -92,38 +94,49 @@ public class Login  {
 
     }
 
-
     public  WebElement ByUserElement(String key,String name){
 
         switch (key){
             case "id" :element = driver.findElement(By.id(name));
-            break;
+                break;
             case "name" :element = driver.findElement(By.name(name));
-            break;
+                break;
             case "className" :element = driver.findElement(By.className(name));
-            break;
+                break;
             case "tagName" :element = driver.findElement(By.tagName(name));
-            break;
+                break;
             case "linkText" :element = driver.findElement(By.linkText(name));
-            break;
+                break;
             case "partialLinkText" :element = driver.findElement(By.partialLinkText(name));
-            break;
+                break;
             case "xpath" :element = driver.findElement(By.xpath(name));
-            break;
+                break;
             case "cssSelector" :element = driver.findElement(By.cssSelector(name));
-            break;
+                break;
             default:System.out.println("未获取到key值");
-            break;
+                break;
 
         }
         return element;
     }
 
-   /* public static void main(String[] args){
+    //截图
+    public void takeScreenShot() {
+        long date = System.currentTimeMillis();
+        String path = String.valueOf(date);
+        //当前系统路径
+        String curPath = System.getProperty("user.dir");
+        //图片存放路径
+        String screenPath = curPath + "/" + path + ".png";
 
-        Login  login = new Login();
-        login.InitDriver();
-        login.loginTest();
-    }*/
+        File screen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(screen, new File(screenPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
