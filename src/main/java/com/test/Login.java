@@ -26,8 +26,8 @@ public class Login {
     public void loginTest(){
 
 
-        String username = "15116999073";
-        String password = "a.123456";
+        String username = "username";
+        String password = "password";
         String id_jsbtn = "id_jsbtn";
         String id_signup = "id_signup";
         String name_email = "name_email";
@@ -37,34 +37,58 @@ public class Login {
         String classNames = "classNames";
 
 
-       /* ByUserElement(id_jsbtn1,id_jsbtn2).click();
-        WebElement formElement = ByUserElement(id_signup1,id_signup2);
-        WebElement user =ByUserElement(name_email1,name_email2);
-        user.isDisplayed();
-        WebElement pwd = ByUserElement(name_password1,name_password2);
-        pwd.isDisplayed();
-        WebElement loginButton = ByUserElement(className_mocobtn1,className_mocobtn2);
-        loginButton.isDisplayed();
-        user.sendKeys(username);
-        pwd.sendKeys(password);
-        loginButton.click();
-        WebElement header = ByUserElement(id_header,value);
-        Actions actions =new Actions(driver);
-        actions.moveToElement(header).perform();
-        String name = ByUserElement(className,value).getText();
-        System.out.println(name);*/
-
-
-
-
-    }
-
-    public void getValues(String param){
 
         ProUtil proUtil = new ProUtil(filePath);
-        param = proUtil.getPro(param);
-        String param1=param.split(">")[0];
-        String param2=param.split(">")[1];
+        username = proUtil.getPro(username);
+        password = proUtil.getPro(password);
+
+        id_jsbtn = proUtil.getPro(id_jsbtn);
+        String id_jsbtn1=id_jsbtn.split(">")[0];
+        String id_jsbtn2=id_jsbtn.split(">")[1];
+
+        id_signup = proUtil.getPro(id_signup);
+        String id_signup1=id_signup.split(">")[0];
+        String id_signup2=id_signup.split(">")[1];
+
+        name_email = proUtil.getPro(name_email);
+        String name_email1=name_email.split(">")[0];
+        String name_email2=name_email.split(">")[1];
+
+        name_password = proUtil.getPro(name_password);
+        String name_password1=name_password.split(">")[0];
+        String name_password2=name_password.split(">")[1];
+
+        className_mocobtn = proUtil.getPro(className_mocobtn);
+        String className_mocobtn1=className_mocobtn.split(">")[0];
+        String className_mocobtn2=className_mocobtn.split(">")[1];
+
+        id_header = proUtil.getPro(id_header);
+        String id_header1=id_header.split(">")[0];
+        String id_header2=id_header.split(">")[1];
+
+        classNames = proUtil.getPro(classNames);
+        String classNames1=classNames.split(">")[0];
+        String classNames2=classNames.split(">")[1];
+
+
+        ByUserElement(id_jsbtn1,id_jsbtn2).click();
+        WebElement formElement = ByUserElement(id_signup1,id_signup2);
+
+        //user.isDisplayed();
+
+        //pwd.isDisplayed();
+
+        //loginButton.isDisplayed();
+        formElement.findElement(By.name(name_email2)).sendKeys(username);
+        formElement.findElement(By.name(name_password2)).sendKeys(password);
+        formElement.findElement(By.className(className_mocobtn2)).click();
+        WebElement header = ByUserElement(id_header1,id_header2);
+        Actions actions =new Actions(driver);
+        actions.moveToElement(header).perform();
+        String name = ByUserElement(classNames1,classNames2).getText();
+        System.out.println(name);
+
+
     }
 
     public  WebElement ByUserElement(String key,String name){
