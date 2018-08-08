@@ -10,15 +10,16 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
-import static org.testng.Assert.*;
-@Listeners(TestngListenerScreenShotTest.class)
-public class LoginTest extends baseDriver{
+public class LoginTest {
     public WebDriver driver;
     public WebElement element;
     String filePath = "element.properties";
 
-    @Test
+
+
+
     public void testInitDriver() {
         System.setProperty("webdriver.chrome.driver","chromedriver");
         driver = new ChromeDriver();
@@ -27,7 +28,6 @@ public class LoginTest extends baseDriver{
         driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
     }
 
-    @Test(dependsOnMethods ={"testInitDriver"} )
     public void testLoginTest() {
         String username = "username";
         String password = "password";
@@ -123,6 +123,7 @@ public class LoginTest extends baseDriver{
     //截图
     public void takeScreenShot() {
         long date = System.currentTimeMillis();
+
         String path = String.valueOf(date);
         //当前系统路径
         String curPath = System.getProperty("user.dir");
