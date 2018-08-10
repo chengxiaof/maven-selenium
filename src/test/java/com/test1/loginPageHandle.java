@@ -23,10 +23,7 @@ public class loginPageHandle {
         lp.click(lp.getLoginButtonElement());
     }
 
-    //判断是否是登录页面
-    public boolean assertLoginPage(){
-        return
-    }
+
 
 
 }
